@@ -31,13 +31,12 @@ public class MainActivity extends Activity {
 	Button btnSearch;
 	ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 	ImageResultArrayAdapter imageAdapter;
-	CursorResult cursorResult;
 	
 	String imageSize = "";
 	String imageColor = "";
 	String imageType = "";
 	String siteFilter = "";
-	
+
 	String url = "";
 
 	@Override
@@ -66,7 +65,7 @@ public class MainActivity extends Activity {
 	        public void onLoadMore(int page, int totalItemsCount) {
 	                // Triggered only when new data needs to be appended to the list
 	                // Add whatever code is needed to append new items to your AdapterView
-	        	Toast.makeText(getApplicationContext(), "Inside OnScroll Listener", Toast.LENGTH_LONG).show();
+	        //	Toast.makeText(getApplicationContext(), "Inside OnScroll Listener", Toast.LENGTH_LONG).show();
 	        	customLoadMoreDataFromApi(page); 
 	        	
 	            	                // or customLoadMoreDataFromApi(totalItemsCount); 
@@ -74,18 +73,11 @@ public class MainActivity extends Activity {
 
 			private void customLoadMoreDataFromApi(int page) {
 				String query = etQuery.getText().toString();
-//				Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT)
-//						.show();
 				AsyncHttpClient client = new AsyncHttpClient();
-//				Toast.makeText(getApplicationContext(), "Image Color is " + imageColor, Toast.LENGTH_SHORT).show();
-//				Toast.makeText(getApplicationContext(), "Image size is " + imageSize, Toast.LENGTH_SHORT).show();
-//				Toast.makeText(getApplicationContext(), "Image Type is " + imageType, Toast.LENGTH_SHORT).show();
-//				Toast.makeText(getApplicationContext(), "SiteFilter is " + siteFilter, Toast.LENGTH_SHORT).show();
-				url = cursorResult.getMoreResultsUrl();
-				Toast.makeText(getApplicationContext(), "cursor Result is" + cursorResult, Toast.LENGTH_SHORT).show();
+
+			//	Toast.makeText(getApplicationContext(), "cursor Result is" + cursorResult, Toast.LENGTH_SHORT).show();
 				client.get(
-					url + Uri.encode(query) + "&imgcolor=" + imageColor + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&as_sitesearch=" + siteFilter,
-				//	"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&v=1.0&q=" + Uri.encode(query) + "&imgcolor=" + "red" + "&imgsz=" + "icon" + "&imgtype=" + "face" + "&as_sitesearch=" + "",
+						"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&v=1.0&start=" + page + "&q="+ Uri.encode(query) + "&imgcolor=" + imageColor + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&as_sitesearch=" + siteFilter,
 
 					new JsonHttpResponseHandler() {
 							
@@ -96,11 +88,11 @@ public class MainActivity extends Activity {
 								try {
 									imageJsonResults = response.getJSONObject(
 											"responseData").getJSONArray("results");
-									imageResults.clear();
+									
 									imageAdapter.addAll(ImageResult
 											.fromJSONArray(imageJsonResults));
 									
-									 cursorResult = CursorResult.fromJSONObject(response.getJSONObject("responseData").getJSONObject("cursor"));
+					//				 cursorResult = CursorResult.fromJSONObject(response.getJSONObject("responseData").getJSONObject("cursor"));
 
 								} catch (JSONException e) {
 									e.printStackTrace();
@@ -120,7 +112,7 @@ public class MainActivity extends Activity {
     }
 	
 	public void onSettings(MenuItem mi){
-		Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
+	//	Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
 		Intent i = new Intent(getApplicationContext(), SearchOptionsActivity.class);
 		startActivityForResult(i,1);
 	}
@@ -132,19 +124,10 @@ public class MainActivity extends Activity {
 
 	public void onImageSearch(View v) {
 		String query = etQuery.getText().toString();
-//		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT)
-//				.show();
 		AsyncHttpClient client = new AsyncHttpClient();
-//		Toast.makeText(getApplicationContext(), "Image Color is " + imageColor, Toast.LENGTH_SHORT).show();
-//		Toast.makeText(getApplicationContext(), "Image size is " + imageSize, Toast.LENGTH_SHORT).show();
-//		Toast.makeText(getApplicationContext(), "Image Type is " + imageType, Toast.LENGTH_SHORT).show();
-//		Toast.makeText(getApplicationContext(), "SiteFilter is " + siteFilter, Toast.LENGTH_SHORT).show();
-
 
 		client.get(
-				"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&v=1.0&q=" + Uri.encode(query) + "&imgcolor=" + imageColor + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&as_sitesearch=" + siteFilter,
-		//	"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&v=1.0&q=" + Uri.encode(query) + "&imgcolor=" + "red" + "&imgsz=" + "icon" + "&imgtype=" + "face" + "&as_sitesearch=" + "",
-
+				"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&v=1.0&start=0&q=" + Uri.encode(query) + "&imgcolor=" + imageColor + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&as_sitesearch=" + siteFilter,
 			new JsonHttpResponseHandler() {
 					
 					@Override
@@ -157,10 +140,7 @@ public class MainActivity extends Activity {
 							imageResults.clear();
 							imageAdapter.addAll(ImageResult
 									.fromJSONArray(imageJsonResults));
-							
-							 cursorResult = CursorResult.fromJSONObject(response.getJSONObject("responseData").getJSONObject("cursor"));
-							 
-						
+	
 							Log.v("verbose", imageResults.toString());
 							Log.d("DEBUG", imageResults.toString() + "#########something");
 						} catch (JSONException e) {
