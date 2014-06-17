@@ -1,7 +1,8 @@
 GridImageSearch
 ===============
 1.Hours Spent : 13 hrs 
-2. 
+
+2.
 User can enter a search query that will display a grid of image results from the Google Image API.
 User can click on "settings" which allows selection of advanced search options to filter results
 User can configure advanced search filters such as:
