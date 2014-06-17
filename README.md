@@ -12,4 +12,7 @@ Site (espn.com)
 Subsequent searches will have any filters applied to the search results
 User can tap on any image in results to see the image full-screen
  -- (Was working on this )User can scroll down “infinitely” to continue loading more image results (up to 8 pages)
+
+3 . Gif in home directory.
+
  
