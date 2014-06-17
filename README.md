@@ -14,7 +14,7 @@ GridImageSearch
 * [x] User can tap on any image in results to see the image full-screen
 * [x] User can scroll down “infinitely” to continue loading more image results (up to 8 pages)
 
-3 . Gif in home directory.
+3.
 ![Video Walkthrough](gridImageSearch.gif)
 
 
