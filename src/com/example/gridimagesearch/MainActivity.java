@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
 	String imageType = "";
 	String siteFilter = "";
 	
-	String url = "https://ajax.googleapis.com/ajax/services/search/images?rsz=8&v=1.0&q=";
+	String url = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,8 +132,8 @@ public class MainActivity extends Activity {
 
 	public void onImageSearch(View v) {
 		String query = etQuery.getText().toString();
-		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT)
-				.show();
+//		Toast.makeText(this, "Searching for " + query, Toast.LENGTH_SHORT)
+//				.show();
 		AsyncHttpClient client = new AsyncHttpClient();
 //		Toast.makeText(getApplicationContext(), "Image Color is " + imageColor, Toast.LENGTH_SHORT).show();
 //		Toast.makeText(getApplicationContext(), "Image size is " + imageSize, Toast.LENGTH_SHORT).show();
@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
 
 
 		client.get(
-			url + Uri.encode(query) + "&imgcolor=" + imageColor + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&as_sitesearch=" + siteFilter,
+				"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&v=1.0&q=" + Uri.encode(query) + "&imgcolor=" + imageColor + "&imgsz=" + imageSize + "&imgtype=" + imageType + "&as_sitesearch=" + siteFilter,
 		//	"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&v=1.0&q=" + Uri.encode(query) + "&imgcolor=" + "red" + "&imgsz=" + "icon" + "&imgtype=" + "face" + "&as_sitesearch=" + "",
 
 			new JsonHttpResponseHandler() {
